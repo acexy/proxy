@@ -18,7 +18,7 @@ rm -rf ./release/packages
 mkdir -p ./release/packages
 
 # 常用平台
-os_all='linux darwin'
+os_all='linux windows darwin'
 arch_all='amd64 arm64'
 
 # 默认设置
