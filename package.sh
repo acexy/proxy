@@ -22,8 +22,8 @@ os_all='linux darwin'
 arch_all='amd64 arm64'
 
 # 默认设置
-# os_all='linux windows darwin freebsd android'
-# arch_all='386 amd64 arm arm64 mips64 mips64le mips mipsle riscv64'
+#os_all='linux windows darwin freebsd android'
+#arch_all='386 amd64 arm arm64 mips64 mips64le mips mipsle riscv64 loong64'
 
 extra_all='_ hf'
 
