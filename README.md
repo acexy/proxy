@@ -7,11 +7,15 @@
 
 [README](README.md) | [中文文档](README_zh.md)
 
+## Sponsors
+
+frp is an open source project with its ongoing development made possible entirely by the support of our awesome sponsors. If you'd like to join them, please consider [sponsoring frp's development](https://github.com/sponsors/fatedier).
+
 <h3 align="center">Gold Sponsors</h3>
 <!--gold sponsors start-->
 <p align="center">
-  <a href="https://workos.com/?utm_campaign=github_repo&utm_medium=referral&utm_content=frp&utm_source=github" target="_blank">
-    <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_workos.png">
+  <a href="https://jb.gg/frp" target="_blank">
+    <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_jetbrains.jpg">
   </a>
 </p>
 <p align="center">
@@ -20,8 +24,8 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/beclab/terminus" target="_blank">
-    <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_terminusos.jpeg">
+  <a href="https://github.com/beclab/Olares" target="_blank">
+    <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_olares.jpeg">
   </a>
 </p>
 <!--gold sponsors end-->
@@ -88,7 +92,12 @@ frp also offers a P2P connect mode.
     * [Client Plugins](#client-plugins)
     * [Server Manage Plugins](#server-manage-plugins)
     * [SSH Tunnel Gateway](#ssh-tunnel-gateway)
-* [Releated Projects](#releated-projects)
+    * [Virtual Network (VirtualNet)](#virtual-network-virtualnet)
+* [Feature Gates](#feature-gates)
+    * [Available Feature Gates](#available-feature-gates)
+    * [Enabling Feature Gates](#enabling-feature-gates)
+    * [Feature Lifecycle](#feature-lifecycle)
+* [Related Projects](#related-projects)
 * [Contributing](#contributing)
 * [Donation](#donation)
     * [GitHub Sponsors](#github-sponsors)
@@ -1251,7 +1260,40 @@ frpc tcp --proxy_name "test-tcp" --local_ip 127.0.0.1 --local_port 8080 --remote
 
 Please refer to this [document](/doc/ssh_tunnel_gateway.md) for more information.
 
-## Releated Projects
+### Virtual Network (VirtualNet)
+
+*Alpha feature added in v0.62.0*
+
+The VirtualNet feature enables frp to create and manage virtual network connections between clients and visitors through a TUN interface. This allows for IP-level routing between machines, extending frp beyond simple port forwarding to support full network connectivity.
+
+For detailed information about configuration and usage, please refer to the [VirtualNet documentation](/doc/virtual_net.md).
+
+## Feature Gates
+
+frp supports feature gates to enable or disable experimental features. This allows users to try out new features before they're considered stable.
+
+### Available Feature Gates
+
+| Name | Stage | Default | Description |
+|------|-------|---------|-------------|
+| VirtualNet | ALPHA | false | Virtual network capabilities for frp |
+
+### Enabling Feature Gates
+
+To enable an experimental feature, add the feature gate to your configuration:
+
+```toml
+featureGates = { VirtualNet = true }
+```
+
+### Feature Lifecycle
+
+Features typically go through three stages:
+1. **ALPHA**: Disabled by default, may be unstable
+2. **BETA**: May be enabled by default, more stable but still evolving
+3. **GA (Generally Available)**: Enabled by default, ready for production use
+
+## Related Projects
 
 * [gofrp/plugin](https://github.com/gofrp/plugin) - A repository for frp plugins that contains a variety of plugins implemented based on the frp extension mechanism, meeting the customization needs of different scenarios.
 * [gofrp/tiny-frpc](https://github.com/gofrp/tiny-frpc) - A lightweight version of the frp client (around 3.5MB at minimum) implemented using the ssh protocol, supporting some of the most commonly used features, suitable for devices with limited resources.
