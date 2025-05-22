@@ -138,13 +138,9 @@ func runClient(cfgFilePath string) error {
 }
 
 func RunClientBytes(raw []byte) error {
-	cfg, proxyCfgs, visitorCfgs, isLegacyFormat, err := config.LoadClientConfigBytes(raw, strictConfigMode)
+	cfg, proxyCfgs, visitorCfgs, _, err := config.LoadClientConfigBytes(raw, strictConfigMode)
 	if err != nil {
 		return err
-	}
-	if isLegacyFormat {
-		fmt.Printf("WARNING: ini format is deprecated and the support will be removed in the future, " +
-			"please use yaml/json/toml format instead!\n")
 	}
 
 	if len(cfg.FeatureGates) > 0 {
