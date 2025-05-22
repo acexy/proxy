@@ -103,8 +103,20 @@ func LoadFileContentWithTemplate(path string, values *Values) ([]byte, error) {
 	return RenderWithTemplate(b, values)
 }
 
+func LoadFileContentWithTemplateBytes(raw []byte, values *Values) ([]byte, error) {
+	return RenderWithTemplate(raw, values)
+}
+
 func LoadConfigureFromFile(path string, c any, strict bool) error {
 	content, err := LoadFileContentWithTemplate(path, GetValues())
+	if err != nil {
+		return err
+	}
+	return LoadConfigure(content, c, strict)
+}
+
+func LoadConfigureFromFileBytes(raw []byte, c any, strict bool) error {
+	content, err := LoadFileContentWithTemplateBytes(raw, GetValues())
 	if err != nil {
 		return err
 	}
@@ -225,6 +237,65 @@ func LoadClientConfig(path string, strict bool) (
 		for _, c := range allCfg.Visitors {
 			visitorCfgs = append(visitorCfgs, c.VisitorConfigurer)
 		}
+	}
+
+	// Load additional config from includes.
+	// legacy ini format already handle this in ParseClientConfig.
+	if len(cliCfg.IncludeConfigFiles) > 0 && !isLegacyFormat {
+		extProxyCfgs, extVisitorCfgs, err := LoadAdditionalClientConfigs(cliCfg.IncludeConfigFiles, isLegacyFormat, strict)
+		if err != nil {
+			return nil, nil, nil, isLegacyFormat, err
+		}
+		proxyCfgs = append(proxyCfgs, extProxyCfgs...)
+		visitorCfgs = append(visitorCfgs, extVisitorCfgs...)
+	}
+
+	// Filter by start
+	if len(cliCfg.Start) > 0 {
+		startSet := sets.New(cliCfg.Start...)
+		proxyCfgs = lo.Filter(proxyCfgs, func(c v1.ProxyConfigurer, _ int) bool {
+			return startSet.Has(c.GetBaseConfig().Name)
+		})
+		visitorCfgs = lo.Filter(visitorCfgs, func(c v1.VisitorConfigurer, _ int) bool {
+			return startSet.Has(c.GetBaseConfig().Name)
+		})
+	}
+
+	if cliCfg != nil {
+		cliCfg.Complete()
+	}
+	for _, c := range proxyCfgs {
+		c.Complete(cliCfg.User)
+	}
+	for _, c := range visitorCfgs {
+		c.Complete(cliCfg)
+	}
+	return cliCfg, proxyCfgs, visitorCfgs, isLegacyFormat, nil
+}
+
+func LoadClientConfigBytes(raw []byte, strict bool) (
+	*v1.ClientCommonConfig,
+	[]v1.ProxyConfigurer,
+	[]v1.VisitorConfigurer,
+	bool, error,
+) {
+	var (
+		cliCfg         *v1.ClientCommonConfig
+		proxyCfgs      = make([]v1.ProxyConfigurer, 0)
+		visitorCfgs    = make([]v1.VisitorConfigurer, 0)
+		isLegacyFormat bool
+	)
+
+	allCfg := v1.ClientConfig{}
+	if err := LoadConfigureFromFileBytes(raw, &allCfg, strict); err != nil {
+		return nil, nil, nil, false, err
+	}
+	cliCfg = &allCfg.ClientCommonConfig
+	for _, c := range allCfg.Proxies {
+		proxyCfgs = append(proxyCfgs, c.ProxyConfigurer)
+	}
+	for _, c := range allCfg.Visitors {
+		visitorCfgs = append(visitorCfgs, c.VisitorConfigurer)
 	}
 
 	// Load additional config from includes.

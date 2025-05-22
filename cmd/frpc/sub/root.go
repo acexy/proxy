@@ -137,6 +137,32 @@ func runClient(cfgFilePath string) error {
 	return startService(cfg, proxyCfgs, visitorCfgs, cfgFilePath)
 }
 
+func RunClientBytes(raw []byte) error {
+	cfg, proxyCfgs, visitorCfgs, isLegacyFormat, err := config.LoadClientConfigBytes(raw, strictConfigMode)
+	if err != nil {
+		return err
+	}
+	if isLegacyFormat {
+		fmt.Printf("WARNING: ini format is deprecated and the support will be removed in the future, " +
+			"please use yaml/json/toml format instead!\n")
+	}
+
+	if len(cfg.FeatureGates) > 0 {
+		if err := featuregate.SetFromMap(cfg.FeatureGates); err != nil {
+			return err
+		}
+	}
+
+	warning, err := validation.ValidateAllClientConfig(cfg, proxyCfgs, visitorCfgs)
+	if warning != nil {
+		fmt.Printf("WARNING: %v\n", warning)
+	}
+	if err != nil {
+		return err
+	}
+	return startService(cfg, proxyCfgs, visitorCfgs, "./")
+}
+
 func startService(
 	cfg *v1.ClientCommonConfig,
 	proxyCfgs []v1.ProxyConfigurer,
@@ -146,7 +172,6 @@ func startService(
 	log.InitLogger(cfg.Log.To, cfg.Log.Level, int(cfg.Log.MaxDays), cfg.Log.DisablePrintColor)
 
 	if cfgFile != "" {
-		log.Infof("start frpc service for config file [%s]", cfgFile)
 		defer log.Infof("frpc service for config file [%s] stopped", cfgFile)
 	}
 	svr, err := client.NewService(client.ServiceOptions{
