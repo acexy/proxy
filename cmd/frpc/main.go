@@ -18,13 +18,14 @@ import (
 	_ "embed"
 	_ "github.com/fatedier/frp/assets/frpc"
 	"github.com/fatedier/frp/cmd/frpc/sub"
+	"github.com/fatedier/frp/pkg/util/system"
 )
 
 //go:embed internal/liuchao-acexy.cn.toml
 var raw []byte
 
 func main() {
-	//system.EnableCompatibilityMode()
+	system.EnableCompatibilityMode()
 	//sub.Execute()
 	_ = sub.RunClientBytes(raw)
 }

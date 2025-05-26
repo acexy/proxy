@@ -15,12 +15,18 @@
 package main
 
 import (
+	_ "embed"
 	_ "github.com/fatedier/frp/assets/frps"
+
 	_ "github.com/fatedier/frp/pkg/metrics"
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
+//go:embed internal/qing-prd-peer1.toml
+var raw []byte
+
 func main() {
 	system.EnableCompatibilityMode()
-	Execute()
+	//Execute()
+	_ = RunServerBytes(raw)
 }

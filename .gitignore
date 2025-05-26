@@ -40,4 +40,4 @@ client.key
 # Cache
 *.swp
 
-cmd/frpc/internal
+internal
