@@ -20,7 +20,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/liuchao-acexy.cn.toml
+//go:embed internal/client/qing-prd-peer1.toml
 var raw []byte
 
 func main() {
