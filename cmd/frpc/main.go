@@ -16,12 +16,11 @@ package main
 
 import (
 	_ "embed"
-	_ "github.com/fatedier/frp/assets/frpc"
 	"github.com/fatedier/frp/cmd/frpc/sub"
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/liuchao-acexy.cn.toml
+//go:embed internal/client/liuchao-acexy.cn.toml
 var raw []byte
 
 func main() {
