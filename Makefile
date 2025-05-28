@@ -71,3 +71,8 @@ clean:
 	# rm -f ./bin/frps
 	# rm -rf ./lastversion
 	rm -rf release
+
+# 自定义快捷编译
+
+linux-client:
+	env GOOS=linux GOARCH=amd64 go build -trimpath -ldflags "$(LDFLAGS)" -tags linux_amd64 -o bin/proxyc ./cmd/frpc
