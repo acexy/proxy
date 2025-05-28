@@ -21,7 +21,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/server/qing-prd-peer1.toml
+//go:embed internal/server/test.toml
 var raw []byte
 
 func main() {

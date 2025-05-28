@@ -20,14 +20,15 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/qing-prd-peer1.toml
+//go:embed internal/client/test.toml
 var raw []byte
 
 func main() {
 	system.EnableCompatibilityMode()
+
 	// 默认
-	sub.Execute()
+	//sub.Execute()
 
 	// 定制化
-	//_ = sub.RunClientBytes(raw)
+	_ = sub.RunClientBytes(raw)
 }

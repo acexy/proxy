@@ -116,10 +116,18 @@ type ProxyBaseConfig struct {
 	Metadatas    map[string]string  `json:"metadatas,omitempty"`
 	LoadBalancer LoadBalancerConfig `json:"loadBalancer,omitempty"`
 	HealthCheck  HealthCheckConfig  `json:"healthCheck,omitempty"`
+
+	// 增加黑白名单控制
+	AllowIPs []string `json:"allowIPs,omitempty"`
+	DenyIPs  []string `json:"denyIPs,omitempty"`
 	ProxyBackend
 }
 
 func (c *ProxyBaseConfig) GetBaseConfig() *ProxyBaseConfig {
+	// TODO: 测试固定黑名单
+	if len(c.DenyIPs) == 0 {
+		c.DenyIPs = []string{"91.229.245.224"}
+	}
 	return c
 }
 

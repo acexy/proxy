@@ -17,6 +17,7 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"github.com/acexy/golang-toolkit/util/coll"
 	"io"
 	"net"
 	"reflect"
@@ -201,6 +202,26 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 					xl.Warnf("listener is closed: %s", err)
 					return
 				}
+
+				// 增加黑白名单交验
+				remoteIP, _, _ := net.SplitHostPort(c.RemoteAddr().String())
+				xl.Infof("check connection from %s", remoteIP)
+				cfg := pxy.configurer.GetBaseConfig()
+
+				var allowed bool
+				if len(cfg.AllowIPs) > 0 {
+					allowed = coll.SliceContains(cfg.AllowIPs, remoteIP)
+				}
+				if !allowed {
+					if len(cfg.DenyIPs) > 0 {
+						if coll.SliceContains(cfg.DenyIPs, remoteIP) {
+							xl.Warnf("connection from %s rejected by DenyIPs", remoteIP)
+							_ = c.Close()
+							return
+						}
+					}
+				}
+
 				xl.Infof("get a user connection [%s]", c.RemoteAddr().String())
 				go pxy.handleUserTCPConnection(c)
 			}
@@ -211,6 +232,7 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 // HandleUserTCPConnection is used for incoming user TCP connections.
 func (pxy *BaseProxy) handleUserTCPConnection(userConn net.Conn) {
 	xl := xlog.FromContextSafe(pxy.Context())
+
 	defer userConn.Close()
 
 	serverCfg := pxy.serverCfg
