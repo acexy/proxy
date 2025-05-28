@@ -27,8 +27,8 @@ func main() {
 	system.EnableCompatibilityMode()
 
 	// 默认
-	//sub.Execute()
+	sub.Execute()
 
 	// 定制化
-	_ = sub.RunClientBytes(raw)
+	//_ = sub.RunClientBytes(raw)
 }

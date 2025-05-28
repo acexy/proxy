@@ -124,10 +124,6 @@ type ProxyBaseConfig struct {
 }
 
 func (c *ProxyBaseConfig) GetBaseConfig() *ProxyBaseConfig {
-	// TODO: 测试固定黑名单
-	if len(c.DenyIPs) == 0 {
-		c.DenyIPs = []string{"91.229.245.224"}
-	}
 	return c
 }
 
