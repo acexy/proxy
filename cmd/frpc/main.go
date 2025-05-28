@@ -20,15 +20,15 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/test.toml
+//go:embed internal/client/liuchao-acexy.cn.toml
 var raw []byte
 
 func main() {
 	system.EnableCompatibilityMode()
 
 	// 默认
-	sub.Execute()
+	//sub.Execute()
 
 	// 定制化
-	//_ = sub.RunClientBytes(raw)
+	_ = sub.RunClientBytes(raw)
 }
