@@ -38,16 +38,16 @@ var (
 )
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file of frps")
-	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "version of frps")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file of proxys")
+	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "version of proxys")
 	rootCmd.PersistentFlags().BoolVarP(&strictConfigMode, "strict_config", "", true, "strict config parsing mode, unknown fields will cause errors")
 
 	config.RegisterServerConfigFlags(rootCmd, &serverCfg)
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "frps",
-	Short: "frps is the server of frp (https://github.com/fatedier/frp)",
+	Use:   "proxys",
+	Short: "proxys is the server of proxy",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if showVersion {
 			fmt.Println(version.Full())
