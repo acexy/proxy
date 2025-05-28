@@ -17,25 +17,26 @@ package main
 import (
 	_ "embed"
 	_ "github.com/fatedier/frp/assets/frps"
-
-	"fmt"
 	_ "github.com/fatedier/frp/pkg/metrics"
 	"github.com/fatedier/frp/pkg/util/system"
-	"github.com/fatedier/frp/pkg/util/version"
-	"os"
 )
 
 //go:embed internal/server/qing-prd-peer1.toml
 var raw []byte
 
 func main() {
-	for _, arg := range os.Args[1:] {
-		if arg == "--version" || arg == "-v" {
-			fmt.Println(version.Full())
-			return
-		}
-	}
+
 	system.EnableCompatibilityMode()
-	//Execute()
-	_ = RunServerBytes(raw)
+
+	// 默认
+	Execute()
+
+	// 定制化
+	//for _, arg := range os.Args[1:] {
+	//	if arg == "--version" || arg == "-v" {
+	//		fmt.Println(version.Full())
+	//		return
+	//	}
+	//}
+	//_ = RunServerBytes(raw)
 }

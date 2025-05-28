@@ -25,6 +25,9 @@ var raw []byte
 
 func main() {
 	system.EnableCompatibilityMode()
-	//sub.Execute()
-	_ = sub.RunClientBytes(raw)
+	// 默认
+	sub.Execute()
+
+	// 定制化
+	//_ = sub.RunClientBytes(raw)
 }
