@@ -16,27 +16,31 @@ package main
 
 import (
 	_ "embed"
+	"fmt"
+	"github.com/fatedier/frp/acexy/crypto"
 	_ "github.com/fatedier/frp/assets/frps"
 	_ "github.com/fatedier/frp/pkg/metrics"
 	"github.com/fatedier/frp/pkg/util/system"
+	"github.com/fatedier/frp/pkg/util/version"
+	"os"
 )
 
-//go:embed internal/server/test.toml
+//go:embed internal/server/test.toml.enc
 var raw []byte
 
 func main() {
-
 	system.EnableCompatibilityMode()
 
 	// 默认
-	Execute()
+	//Execute()
 
 	// 定制化
-	//for _, arg := range os.Args[1:] {
-	//	if arg == "--version" || arg == "-v" {
-	//		fmt.Println(version.Full())
-	//		return
-	//	}
-	//}
-	//_ = RunServerBytes(raw)
+	for _, arg := range os.Args[1:] {
+		if arg == "--version" || arg == "-v" {
+			fmt.Println(version.Full())
+			return
+		}
+	}
+	raw, _ = crypto.DecryptOpenSSL(raw, "acexy")
+	_ = RunServerBytes(raw)
 }

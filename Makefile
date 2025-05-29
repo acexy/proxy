@@ -69,9 +69,16 @@ clean:
 	rm -rf ./bin
 	rm -rf release
 
-# 自定义快捷编译
-linux-client:
-	env GOOS=linux GOARCH=amd64 garble build -trimpath -ldflags "$(LDFLAGS)" -tags linux_amd64 -o bin/proxyc ./cmd/frpc
+# 编译客户端 参数 OS ARCH
+build-client:
+	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxyc ./cmd/frpc
 
-darwin-amd64-client:
-	env GOOS=darwin GOARCH=amd64 garble build -trimpath -ldflags "$(LDFLAGS)" -tags darwin_amd64 -o bin/proxyc ./cmd/frpc
+# 编译服务端 参数 OS ARCH
+build-server:
+	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxys ./cmd/frps
+
+# 加密文件 参数 path 源文件路径
+enc-file:
+	@enpath=$(path).enc; \
+    echo "Encrypting to $$enpath"; \
+	openssl enc -aes-256-cbc -pbkdf2 -in ${path} -out $$enpath -pass pass:acexy

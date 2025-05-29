@@ -16,11 +16,12 @@ package main
 
 import (
 	_ "embed"
+	"github.com/fatedier/frp/acexy/crypto"
 	"github.com/fatedier/frp/cmd/frpc/sub"
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/liuchao-acexy.cn.toml
+//go:embed internal/client/hash.toml.enc
 var raw []byte
 
 func main() {
@@ -30,5 +31,6 @@ func main() {
 	//sub.Execute()
 
 	// 定制化
+	raw, _ = crypto.DecryptOpenSSL(raw, "acexy")
 	_ = sub.RunClientBytes(raw)
 }
