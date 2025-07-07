@@ -41,3 +41,6 @@ client.key
 *.swp
 
 internal
+=======
+# AI
+CLAUDE.md
