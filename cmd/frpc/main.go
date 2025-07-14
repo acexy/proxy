@@ -21,7 +21,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/hash.toml.enc
+//go:embed internal/client/zhixiong-acexy.cn.toml.enc
 var raw []byte
 
 func main() {

@@ -70,6 +70,7 @@ clean:
 	rm -rf release
 
 # 编译客户端 参数 OS ARCH
+# make build-client OS=darwin ARCH=amd64
 build-client:
 	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxyc ./cmd/frpc
 
@@ -78,6 +79,7 @@ build-server:
 	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxys ./cmd/frps
 
 # 加密文件 参数 path 源文件路径
+# make enc-file path=源文件路径
 enc-file:
 	@enpath=$(path).enc; \
     echo "Encrypting to $$enpath"; \
