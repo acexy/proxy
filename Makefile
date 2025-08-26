@@ -75,6 +75,7 @@ build-client:
 	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxyc ./cmd/frpc
 
 # 编译服务端 参数 OS ARCH
+# make build-server OS=darwin ARCH=amd64
 build-server:
 	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxys ./cmd/frps
 

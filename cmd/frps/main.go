@@ -17,15 +17,16 @@ package main
 import (
 	_ "embed"
 	"fmt"
+	"os"
+
 	"github.com/fatedier/frp/acexy/crypto"
 	_ "github.com/fatedier/frp/assets/frps"
 	_ "github.com/fatedier/frp/pkg/metrics"
 	"github.com/fatedier/frp/pkg/util/system"
 	"github.com/fatedier/frp/pkg/util/version"
-	"os"
 )
 
-//go:embed internal/server/test.toml.enc
+//go:embed internal/server/nxgoal-sit.toml.enc
 var raw []byte
 
 func main() {
