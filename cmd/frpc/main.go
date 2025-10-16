@@ -16,12 +16,13 @@ package main
 
 import (
 	_ "embed"
+
 	"github.com/fatedier/frp/acexy/crypto"
 	"github.com/fatedier/frp/cmd/frpc/sub"
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/zhixiong-acexy.cn.toml.enc
+//go:embed internal/client/qing-prd-peer1.toml
 var raw []byte
 
 func main() {

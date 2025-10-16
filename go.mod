@@ -1,9 +1,9 @@
 module github.com/fatedier/frp
 
-go 1.24.3
+go 1.24.6
 
 require (
-	github.com/acexy/golang-toolkit v0.0.47
+	github.com/acexy/golang-toolkit v0.0.53
 	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
 	github.com/coreos/go-oidc/v3 v3.14.1
 	github.com/fatedier/golib v0.5.1
@@ -27,10 +27,10 @@ require (
 	github.com/tidwall/gjson v1.18.0
 	github.com/vishvananda/netlink v1.3.1
 	github.com/xtaci/kcp-go/v5 v5.6.21
-	golang.org/x/crypto v0.38.0
-	golang.org/x/net v0.40.0
+	golang.org/x/crypto v0.42.0
+	golang.org/x/net v0.44.0
 	golang.org/x/oauth2 v0.30.0
-	golang.org/x/sync v0.14.0
+	golang.org/x/sync v0.17.0
 	golang.org/x/time v0.11.0
 	golang.zx2c4.com/wireguard v0.0.0-20250521234502-f333402bd9cb
 	gopkg.in/ini.v1 v1.67.0
@@ -64,16 +64,16 @@ require (
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/templexxx/cpu v0.1.1 // indirect
 	github.com/templexxx/xorsimd v0.4.3 // indirect
-	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/match v1.2.0 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.uber.org/automaxprocs v1.6.0 // indirect
 	go.uber.org/mock v0.5.0 // indirect
-	golang.org/x/mod v0.24.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.25.0 // indirect
-	golang.org/x/tools v0.31.0 // indirect
+	golang.org/x/mod v0.27.0 // indirect
+	golang.org/x/sys v0.36.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
+	golang.org/x/tools v0.36.0 // indirect
 	golang.zx2c4.com/wintun v0.0.0-20230126152724-0fa3db229ce2 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

@@ -26,7 +26,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/version"
 )
 
-//go:embed internal/server/nxgoal-sit.toml.enc
+//go:embed internal/server/qing-prd-peer1.toml
 var raw []byte
 
 func main() {
