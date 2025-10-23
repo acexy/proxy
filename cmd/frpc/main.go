@@ -22,7 +22,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/qing-prd-peer1.toml
+//go:embed internal/client/spider-mac.toml.enc
 var raw []byte
 
 func main() {
