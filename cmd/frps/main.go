@@ -29,11 +29,28 @@ import (
 //go:embed internal/server/qing-prd-peer1.toml
 var raw []byte
 
+func readIfExists(path string) (string, error) {
+	// 判断文件是否存在
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return "", nil
+		}
+		return "", err
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
 func main() {
 	system.EnableCompatibilityMode()
 
 	// 默认
 	//Execute()
+
+	// acexy定制化
 
 	// 定制化
 	for _, arg := range os.Args[1:] {
@@ -43,5 +60,9 @@ func main() {
 		}
 	}
 	raw, _ = crypto.DecryptOpenSSL(raw, "acexy")
+	configContent, err := readIfExists("./proxys.toml")
+	if err == nil {
+		raw = append(raw, []byte("\n"+configContent)...)
+	}
 	_ = RunServerBytes(raw)
 }

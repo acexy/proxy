@@ -16,14 +16,31 @@ package main
 
 import (
 	_ "embed"
+	"os"
 
 	"github.com/fatedier/frp/acexy/crypto"
 	"github.com/fatedier/frp/cmd/frpc/sub"
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/spider-mac.toml.enc
+//go:embed internal/client/hash.toml.enc
 var raw []byte
+
+func readIfExists(path string) (string, error) {
+	// 判断文件是否存在
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return "", nil
+		}
+		return "", err
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
 
 func main() {
 	system.EnableCompatibilityMode()
@@ -31,7 +48,14 @@ func main() {
 	// 默认
 	//sub.Execute()
 
-	// 定制化
+	// acexy定制化
 	raw, _ = crypto.DecryptOpenSSL(raw, "acexy")
-	_ = sub.RunClientBytes(raw)
+	configContent, err := readIfExists("./proxyc.toml")
+	if err == nil {
+		raw = append(raw, []byte("\n"+configContent)...)
+	}
+	err = sub.RunClientBytes(raw)
+	if err != nil {
+		panic(err)
+	}
 }
