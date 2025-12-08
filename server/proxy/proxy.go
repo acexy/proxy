@@ -17,13 +17,14 @@ package proxy
 import (
 	"context"
 	"fmt"
-	"github.com/acexy/golang-toolkit/util/coll"
 	"io"
 	"net"
 	"reflect"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/acexy/golang-toolkit/util/coll"
 
 	libio "github.com/fatedier/golib/io"
 	"golang.org/x/time/rate"
@@ -179,7 +180,6 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 	for _, listener := range pxy.listeners {
 		go func(l net.Listener) {
 			var tempDelay time.Duration // how long to sleep on accept failure
-
 			for {
 				// block
 				// if listener is closed, err returned
@@ -204,21 +204,13 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 				}
 
 				// 增加黑白名单交验
-				remoteIP, _, _ := net.SplitHostPort(c.RemoteAddr().String())
-				xl.Infof("check connection from %s", remoteIP)
-				cfg := pxy.configurer.GetBaseConfig()
-
-				var allowed bool
-				if len(cfg.AllowIPs) > 0 {
-					allowed = coll.SliceContains(cfg.AllowIPs, remoteIP)
-				}
-				if !allowed {
-					if len(cfg.DenyIPs) > 0 {
-						if coll.SliceContains(cfg.DenyIPs, remoteIP) {
-							xl.Warnf("connection from %s rejected by DenyIPs", remoteIP)
-							_ = c.Close()
-							return
-						}
+				denyIPs := v1.GetDenyIPs()
+				if len(denyIPs) > 0 {
+					remoteIP, _, _ := net.SplitHostPort(c.RemoteAddr().String())
+					if coll.SliceContains(denyIPs, remoteIP) {
+						xl.Warnf("block ip check: connection from %s rejected by denyIPs", remoteIP)
+						_ = c.Close()
+						return
 					}
 				}
 

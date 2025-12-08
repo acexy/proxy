@@ -19,14 +19,64 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"reflect"
+	"strings"
+	"sync"
+	"time"
 
+	"github.com/acexy/golang-toolkit/sys"
 	"github.com/samber/lo"
 
 	"github.com/fatedier/frp/pkg/config/types"
 	"github.com/fatedier/frp/pkg/msg"
 	"github.com/fatedier/frp/pkg/util/util"
 )
+
+var watchIp sync.Once
+var denyIPs []string
+
+func readIfExists(path string) (string, error) {
+	// 判断文件是否存在
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return "", nil
+		}
+		return "", err
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return string(data), nil
+}
+func GetDenyIPs() []string {
+	watchIp.Do(func() {
+		deny, err := readIfExists("./deny.ip")
+		if err == nil {
+			ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
+			denyIPs = ips
+		}
+		go func() {
+			ticker := time.NewTicker(time.Second * 5)
+			defer ticker.Stop()
+			for {
+				select {
+				case <-ticker.C:
+					deny, err := readIfExists("./deny.ip")
+					if err == nil {
+						ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
+						denyIPs = ips
+					}
+				case <-sys.ShutdownSignal():
+					return
+				}
+			}
+		}()
+	})
+	return denyIPs
+}
 
 type ProxyTransport struct {
 	// UseEncryption controls whether or not communication with the server will
@@ -118,8 +168,7 @@ type ProxyBaseConfig struct {
 	HealthCheck  HealthCheckConfig  `json:"healthCheck,omitempty"`
 
 	// 增加黑白名单控制
-	AllowIPs []string `json:"allowIPs,omitempty"`
-	DenyIPs  []string `json:"denyIPs,omitempty"`
+	DenyIPs []string
 	ProxyBackend
 }
 

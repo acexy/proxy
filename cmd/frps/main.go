@@ -26,7 +26,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/version"
 )
 
-//go:embed internal/server/qing-prd-peer1.toml
+//go:embed internal/server/acexy.toml.enc
 var raw []byte
 
 func readIfExists(path string) (string, error) {
