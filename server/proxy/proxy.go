@@ -198,11 +198,11 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 						time.Sleep(tempDelay)
 						continue
 					}
-
 					xl.Warnf("listener is closed: %s", err)
 					return
 				}
 
+				xl.Infof("get a user connection [%s]", c.RemoteAddr().String())
 				// 增加黑白名单交验
 				denyIPs := v1.GetDenyIPs()
 				if len(denyIPs) > 0 {
@@ -210,11 +210,9 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 					if coll.SliceContains(denyIPs, remoteIP) {
 						xl.Warnf("block ip check: connection from %s rejected by denyIPs", remoteIP)
 						_ = c.Close()
-						return
+						continue
 					}
 				}
-
-				xl.Infof("get a user connection [%s]", c.RemoteAddr().String())
 				go pxy.handleUserTCPConnection(c)
 			}
 		}(listener)
