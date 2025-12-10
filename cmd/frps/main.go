@@ -46,6 +46,7 @@ func main() {
 			return
 		}
 	}
+
 	bytes, _ = crypto.DecryptOpenSSL(bytes, consts.ConfigEncPassword)
 	configContent, err := util.ReadIfExists(consts.ServerConfigRelativePath)
 	if err == nil {
