@@ -1,30 +1,41 @@
 package proxy
 
 import (
+	"os"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/acexy/golang-toolkit/crypto/hashing"
 	"github.com/acexy/golang-toolkit/sys"
 	"github.com/acexy/golang-toolkit/util/coll"
 	"github.com/fatedier/frp/acexy/consts"
-	"github.com/fatedier/frp/acexy/util"
 )
 
 var watchIp sync.Once
 var denyIPs map[string]struct{}
+var lastMD5 string
 
 func loadConfig() {
-	deny, err := util.ReadIfExists(consts.ServerDenyIPsRelativePath)
-	if err == nil {
-		ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
-		denyIPs = coll.SliceFilterToMap(ips, func(v string) (string, struct{}, bool) {
-			v = strings.TrimSpace(v)
-			if v != "" {
-				return v, struct{}{}, true
-			}
-			return "", struct{}{}, false
-		})
+	_, err := os.Stat(consts.ServerDenyIPsRelativePath)
+	if err != nil {
+		return
+	}
+	currentMd5, _ := hashing.Md5FileHex(consts.ServerDenyIPsRelativePath)
+	if lastMD5 != currentMd5 {
+		data, err := os.ReadFile(consts.ServerDenyIPsRelativePath)
+		if err == nil {
+			deny := string(data)
+			ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
+			denyIPs = coll.SliceFilterToMap(ips, func(v string) (string, struct{}, bool) {
+				v = strings.TrimSpace(v)
+				if v != "" {
+					return v, struct{}{}, true
+				}
+				return "", struct{}{}, false
+			})
+		}
+		lastMD5 = currentMd5
 	}
 }
 
