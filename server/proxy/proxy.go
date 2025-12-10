@@ -205,7 +205,7 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 				// 增加ip检查
 				remoteIP, _, _ := net.SplitHostPort(ipInfo)
 				if IsDenyIP(remoteIP) {
-					xl.Warnf("block ip check: connection from %s rejected by denyIPs", remoteIP)
+					xl.Warnf("connection from %s rejected by denyIPs", ipInfo)
 					_ = c.Close()
 					continue
 				}
