@@ -21,20 +21,13 @@ import (
 	"fmt"
 	"os"
 	"reflect"
-	"strings"
-	"sync"
-	"time"
 
-	"github.com/acexy/golang-toolkit/sys"
 	"github.com/samber/lo"
 
 	"github.com/fatedier/frp/pkg/config/types"
 	"github.com/fatedier/frp/pkg/msg"
 	"github.com/fatedier/frp/pkg/util/util"
 )
-
-var watchIp sync.Once
-var denyIPs []string
 
 func readIfExists(path string) (string, error) {
 	// 判断文件是否存在
@@ -50,32 +43,6 @@ func readIfExists(path string) (string, error) {
 		return "", err
 	}
 	return string(data), nil
-}
-func GetDenyIPs() []string {
-	watchIp.Do(func() {
-		deny, err := readIfExists("./deny.ip")
-		if err == nil {
-			ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
-			denyIPs = ips
-		}
-		go func() {
-			ticker := time.NewTicker(time.Second * 5)
-			defer ticker.Stop()
-			for {
-				select {
-				case <-ticker.C:
-					deny, err := readIfExists("./deny.ip")
-					if err == nil {
-						ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
-						denyIPs = ips
-					}
-				case <-sys.ShutdownSignal():
-					return
-				}
-			}
-		}()
-	})
-	return denyIPs
 }
 
 type ProxyTransport struct {
@@ -166,9 +133,6 @@ type ProxyBaseConfig struct {
 	Metadatas    map[string]string  `json:"metadatas,omitempty"`
 	LoadBalancer LoadBalancerConfig `json:"loadBalancer,omitempty"`
 	HealthCheck  HealthCheckConfig  `json:"healthCheck,omitempty"`
-
-	// 增加黑白名单控制
-	DenyIPs []string
 	ProxyBackend
 }
 

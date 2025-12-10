@@ -24,8 +24,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/acexy/golang-toolkit/util/coll"
-
 	libio "github.com/fatedier/golib/io"
 	"golang.org/x/time/rate"
 
@@ -201,18 +199,17 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 					xl.Warnf("listener is closed: %s", err)
 					return
 				}
+				ipInfo := c.RemoteAddr().String()
+				xl.Infof("get a user connection [%s]", ipInfo)
 
-				xl.Infof("get a user connection [%s]", c.RemoteAddr().String())
-				// 增加黑白名单交验
-				denyIPs := v1.GetDenyIPs()
-				if len(denyIPs) > 0 {
-					remoteIP, _, _ := net.SplitHostPort(c.RemoteAddr().String())
-					if coll.SliceContains(denyIPs, remoteIP) {
-						xl.Warnf("block ip check: connection from %s rejected by denyIPs", remoteIP)
-						_ = c.Close()
-						continue
-					}
+				// 增加ip检查
+				remoteIP, _, _ := net.SplitHostPort(ipInfo)
+				if IsDenyIP(remoteIP) {
+					xl.Warnf("block ip check: connection from %s rejected by denyIPs", remoteIP)
+					_ = c.Close()
+					continue
 				}
+
 				go pxy.handleUserTCPConnection(c)
 			}
 		}(listener)

@@ -19,7 +19,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/fatedier/frp/acexy/consts"
 	"github.com/fatedier/frp/acexy/crypto"
+	"github.com/fatedier/frp/acexy/util"
 	_ "github.com/fatedier/frp/assets/frps"
 	_ "github.com/fatedier/frp/pkg/metrics"
 	"github.com/fatedier/frp/pkg/util/system"
@@ -27,30 +29,15 @@ import (
 )
 
 //go:embed internal/server/acexy.toml.enc
-var raw []byte
+var bytes []byte
 
-func readIfExists(path string) (string, error) {
-	// 判断文件是否存在
-	_, err := os.Stat(path)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return "", nil
-		}
-		return "", err
-	}
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return "", err
-	}
-	return string(data), nil
-}
 func main() {
 	system.EnableCompatibilityMode()
 
 	// 默认
 	//Execute()
 
-	// acexy定制化
+	// ---------------------------
 
 	// 定制化
 	for _, arg := range os.Args[1:] {
@@ -59,10 +46,13 @@ func main() {
 			return
 		}
 	}
-	raw, _ = crypto.DecryptOpenSSL(raw, "acexy")
-	configContent, err := readIfExists("./proxys.toml")
+	bytes, _ = crypto.DecryptOpenSSL(bytes, consts.ConfigEncPassword)
+	configContent, err := util.ReadIfExists(consts.ServerConfigRelativePath)
 	if err == nil {
-		raw = append(raw, []byte("\n"+configContent)...)
+		bytes = append(bytes, []byte("\n"+configContent)...)
 	}
-	_ = RunServerBytes(raw)
+	err = RunServerBytes(bytes)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -18,13 +18,14 @@ import (
 	_ "embed"
 	"os"
 
+	"github.com/fatedier/frp/acexy/consts"
 	"github.com/fatedier/frp/acexy/crypto"
 	"github.com/fatedier/frp/cmd/frpc/sub"
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
 //go:embed internal/client/hash.toml.enc
-var raw []byte
+var bytes []byte
 
 func readIfExists(path string) (string, error) {
 	// 判断文件是否存在
@@ -48,13 +49,15 @@ func main() {
 	// 默认
 	//sub.Execute()
 
-	// acexy定制化
-	raw, _ = crypto.DecryptOpenSSL(raw, "acexy")
-	configContent, err := readIfExists("./proxyc.toml")
+	// ----------------------
+
+	// 定制化
+	bytes, _ = crypto.DecryptOpenSSL(bytes, consts.ConfigEncPassword)
+	configContent, err := readIfExists(consts.ClientConfigRelativePath)
 	if err == nil {
-		raw = append(raw, []byte("\n"+configContent)...)
+		bytes = append(bytes, []byte("\n"+configContent)...)
 	}
-	err = sub.RunClientBytes(raw)
+	err = sub.RunClientBytes(bytes)
 	if err != nil {
 		panic(err)
 	}

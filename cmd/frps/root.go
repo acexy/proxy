@@ -38,9 +38,9 @@ var (
 )
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file of proxys")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "bytes", "c", "", "bytes file of proxys")
 	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "version of proxys")
-	rootCmd.PersistentFlags().BoolVarP(&strictConfigMode, "strict_config", "", true, "strict config parsing mode, unknown fields will cause errors")
+	rootCmd.PersistentFlags().BoolVarP(&strictConfigMode, "strict_config", "", true, "strict bytes parsing mode, unknown fields will cause errors")
 
 	config.RegisterServerConfigFlags(rootCmd, &serverCfg)
 }
@@ -71,7 +71,7 @@ var rootCmd = &cobra.Command{
 			}
 		} else {
 			if err := serverCfg.Complete(); err != nil {
-				fmt.Printf("failed to complete server config: %v\n", err)
+				fmt.Printf("failed to complete server bytes: %v\n", err)
 				os.Exit(1)
 			}
 			svrCfg = &serverCfg
@@ -105,16 +105,16 @@ func runServer(cfg *v1.ServerConfig) (err error) {
 	log.InitLogger(cfg.Log.To, cfg.Log.Level, int(cfg.Log.MaxDays), cfg.Log.DisablePrintColor)
 
 	if cfgFile != "" {
-		log.Infof("frps uses config file: %s", cfgFile)
+		log.Infof("proxys uses bytes file: %s", cfgFile)
 	} else {
-		log.Infof("frps uses command line arguments for config")
+		log.Infof("proxys uses command line arguments for bytes")
 	}
 
 	svr, err := server.NewService(cfg)
 	if err != nil {
 		return err
 	}
-	log.Infof("frps started successfully")
+	log.Infof("proxys started successfully")
 	svr.Run(context.Background())
 	return
 }
