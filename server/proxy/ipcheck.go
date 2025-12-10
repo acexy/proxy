@@ -14,7 +14,7 @@ import (
 
 var watchIp sync.Once
 var denyIPs map[string]struct{}
-var lastMD5 string
+var lastMd5 string
 
 func loadConfig() {
 	_, err := os.Stat(consts.ServerDenyIPsRelativePath)
@@ -22,7 +22,7 @@ func loadConfig() {
 		return
 	}
 	currentMd5, _ := hashing.Md5FileHex(consts.ServerDenyIPsRelativePath)
-	if lastMD5 != currentMd5 {
+	if lastMd5 != currentMd5 {
 		data, err := os.ReadFile(consts.ServerDenyIPsRelativePath)
 		if err == nil {
 			deny := string(data)
@@ -35,7 +35,7 @@ func loadConfig() {
 				return "", struct{}{}, false
 			})
 		}
-		lastMD5 = currentMd5
+		lastMd5 = currentMd5
 	}
 }
 
