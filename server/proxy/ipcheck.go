@@ -9,12 +9,14 @@ import (
 	"github.com/acexy/golang-toolkit/crypto/hashing"
 	"github.com/acexy/golang-toolkit/sys"
 	"github.com/acexy/golang-toolkit/util/coll"
+	"github.com/acexy/golang-toolkit/util/net"
 	"github.com/fatedier/frp/acexy/consts"
 )
 
-var watchIp sync.Once
-var denyIPs map[string]struct{}
-var lastMd5 string
+var watchOnce sync.Once
+var ipChecker *net.IpChecker
+var currentIpRules []string
+var lastFileMd5 string
 
 func loadConfig() {
 	_, err := os.Stat(consts.ServerDenyIPsRelativePath)
@@ -22,26 +24,35 @@ func loadConfig() {
 		return
 	}
 	currentMd5, _ := hashing.Md5FileHex(consts.ServerDenyIPsRelativePath)
-	if lastMd5 != currentMd5 {
+	if lastFileMd5 != currentMd5 {
 		data, err := os.ReadFile(consts.ServerDenyIPsRelativePath)
 		if err == nil {
 			deny := string(data)
 			ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
-			denyIPs = coll.SliceFilterToMap(ips, func(v string) (string, struct{}, bool) {
+			fileIpRules := coll.SliceDistinct(coll.SliceCollect(ips, func(v string) string {
 				v = strings.TrimSpace(v)
 				if v != "" {
-					return v, struct{}{}, true
+					return v
 				}
-				return "", struct{}{}, false
-			})
+				return ""
+			}))
+			added, removed := coll.SliceDiff(currentIpRules, fileIpRules)
+			if len(added) > 0 {
+				ipChecker.AddRuleIp(added...)
+			}
+			if len(removed) > 0 {
+				ipChecker.RemoveRuleIp(removed...)
+			}
+			currentIpRules = fileIpRules
 		}
-		lastMd5 = currentMd5
+		lastFileMd5 = currentMd5
 	}
 }
 
 // IsDenyIP 判断ip是否被禁止
 func IsDenyIP(ip string) bool {
-	watchIp.Do(func() {
+	watchOnce.Do(func() {
+		ipChecker = net.NewIpChecker()
 		loadConfig()
 		go func() {
 			ticker := time.NewTicker(time.Second * 3)
@@ -56,9 +67,6 @@ func IsDenyIP(ip string) bool {
 			}
 		}()
 	})
-	if len(denyIPs) == 0 {
-		return false
-	}
-	_, ok := denyIPs[ip]
+	ok, _ := ipChecker.Match(ip)
 	return ok
 }
