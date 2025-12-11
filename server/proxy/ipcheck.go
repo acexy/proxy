@@ -29,12 +29,12 @@ func loadConfig() {
 		if err == nil {
 			deny := string(data)
 			ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
-			fileIpRules := coll.SliceDistinct(coll.SliceCollect(ips, func(v string) string {
+			fileIpRules := coll.SliceDistinct(coll.SliceFilter(ips, func(v string) bool {
 				v = strings.TrimSpace(v)
 				if v != "" {
-					return v
+					return true
 				}
-				return ""
+				return false
 			}))
 			added, removed := coll.SliceDiff(currentIpRules, fileIpRules)
 			if len(added) > 0 {
