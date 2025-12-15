@@ -200,16 +200,15 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 					return
 				}
 				ipInfo := c.RemoteAddr().String()
-				xl.Infof("get a user connection [%s]", ipInfo)
 
 				// 增加ip检查
 				remoteIP, _, _ := net.SplitHostPort(ipInfo)
 				if IsDenyIP(remoteIP) {
-					xl.Warnf("connection from %s rejected by denyIPs", ipInfo)
+					xl.Warnf("user connection from %s rejected by denyIPs", ipInfo)
 					_ = c.Close()
 					continue
 				}
-
+				xl.Infof("get a user connection [%s]", ipInfo)
 				go pxy.handleUserTCPConnection(c)
 			}
 		}(listener)
