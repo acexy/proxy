@@ -52,7 +52,7 @@ func main() {
 	if err == nil {
 		bytes = append(bytes, []byte("\n"+configContent)...)
 	}
-	err = RunServerBytes(bytes)
+	err = runServerWithConfigBytes(bytes)
 	if err != nil {
 		panic(err)
 	}

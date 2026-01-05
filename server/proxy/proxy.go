@@ -68,6 +68,7 @@ type BaseProxy struct {
 	poolCount     int
 	getWorkConnFn GetWorkConnFn
 	serverCfg     *v1.ServerConfig
+	encryptionKey []byte
 	limiter       *rate.Limiter
 	userInfo      plugin.UserInfo
 	loginMsg      *msg.Login
@@ -221,7 +222,6 @@ func (pxy *BaseProxy) handleUserTCPConnection(userConn net.Conn) {
 
 	defer userConn.Close()
 
-	serverCfg := pxy.serverCfg
 	cfg := pxy.configurer.GetBaseConfig()
 	// server plugin hook
 	rc := pxy.GetResourceController()
@@ -248,7 +248,7 @@ func (pxy *BaseProxy) handleUserTCPConnection(userConn net.Conn) {
 	xl.Tracef("handler user tcp connection, use_encryption: %t, use_compression: %t",
 		cfg.Transport.UseEncryption, cfg.Transport.UseCompression)
 	if cfg.Transport.UseEncryption {
-		local, err = libio.WithEncryption(local, []byte(serverCfg.Auth.Token))
+		local, err = libio.WithEncryption(local, pxy.encryptionKey)
 		if err != nil {
 			xl.Errorf("create encryption stream error: %v", err)
 			return
@@ -287,6 +287,7 @@ type Options struct {
 	GetWorkConnFn      GetWorkConnFn
 	Configurer         v1.ProxyConfigurer
 	ServerCfg          *v1.ServerConfig
+	EncryptionKey      []byte
 }
 
 func NewProxy(ctx context.Context, options *Options) (pxy Proxy, err error) {
@@ -306,6 +307,7 @@ func NewProxy(ctx context.Context, options *Options) (pxy Proxy, err error) {
 		poolCount:     options.PoolCount,
 		getWorkConnFn: options.GetWorkConnFn,
 		serverCfg:     options.ServerCfg,
+		encryptionKey: options.EncryptionKey,
 		limiter:       limiter,
 		xl:            xl,
 		ctx:           xlog.NewContext(ctx, xl),

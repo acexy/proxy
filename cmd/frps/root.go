@@ -18,12 +18,14 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 
 	"github.com/fatedier/frp/pkg/config"
 	v1 "github.com/fatedier/frp/pkg/config/v1"
 	"github.com/fatedier/frp/pkg/config/v1/validation"
+	"github.com/fatedier/frp/pkg/policy/security"
 	"github.com/fatedier/frp/pkg/util/log"
 	"github.com/fatedier/frp/pkg/util/version"
 	"github.com/fatedier/frp/server"
@@ -33,6 +35,7 @@ var (
 	cfgFile          string
 	showVersion      bool
 	strictConfigMode bool
+	allowUnsafe      []string
 
 	serverCfg v1.ServerConfig
 )
@@ -41,6 +44,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "bytes", "c", "", "bytes file of proxys")
 	rootCmd.PersistentFlags().BoolVarP(&showVersion, "version", "v", false, "version of proxys")
 	rootCmd.PersistentFlags().BoolVarP(&strictConfigMode, "strict_config", "", true, "strict bytes parsing mode, unknown fields will cause errors")
+	rootCmd.PersistentFlags().StringSliceVarP(&allowUnsafe, "allow-unsafe", "", []string{},
+		fmt.Sprintf("allowed unsafe features, one or more of: %s", strings.Join(security.ServerUnsafeFeatures, ", ")))
 
 	config.RegisterServerConfigFlags(rootCmd, &serverCfg)
 }
@@ -77,7 +82,9 @@ var rootCmd = &cobra.Command{
 			svrCfg = &serverCfg
 		}
 
-		warning, err := validation.ValidateServerConfig(svrCfg)
+		unsafeFeatures := security.NewUnsafeFeatures(allowUnsafe)
+		validator := validation.NewConfigValidator(unsafeFeatures)
+		warning, err := validator.ValidateServerConfig(svrCfg)
 		if warning != nil {
 			fmt.Printf("WARNING: %v\n", warning)
 		}
@@ -117,4 +124,21 @@ func runServer(cfg *v1.ServerConfig) (err error) {
 	log.Infof("proxys started successfully")
 	svr.Run(context.Background())
 	return
+}
+
+func runServerWithConfigBytes(raw []byte) error {
+	svrCfg := &v1.ServerConfig{}
+	if err := config.LoadConfigureFromFileBytes(raw, svrCfg, true); err != nil {
+		return err
+	}
+	svrCfg.Complete()
+
+	log.InitLogger(svrCfg.Log.To, svrCfg.Log.Level, int(svrCfg.Log.MaxDays), svrCfg.Log.DisablePrintColor)
+
+	svr, err := server.NewService(svrCfg)
+	if err != nil {
+		return err
+	}
+	svr.Run(context.Background())
+	return nil
 }
