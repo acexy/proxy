@@ -24,7 +24,7 @@ import (
 	"github.com/fatedier/frp/pkg/util/system"
 )
 
-//go:embed internal/client/hash.toml.enc
+//go:embed internal/client/liuchao-acexy.cn.toml.enc
 var bytes []byte
 
 func readIfExists(path string) (string, error) {
