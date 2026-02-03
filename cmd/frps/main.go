@@ -22,10 +22,10 @@ import (
 	"github.com/fatedier/frp/acexy/consts"
 	"github.com/fatedier/frp/acexy/crypto"
 	"github.com/fatedier/frp/acexy/util"
-	_ "github.com/fatedier/frp/assets/frps"
 	_ "github.com/fatedier/frp/pkg/metrics"
 	"github.com/fatedier/frp/pkg/util/system"
 	"github.com/fatedier/frp/pkg/util/version"
+	_ "github.com/fatedier/frp/web/frps"
 )
 
 //go:embed internal/server/acexy.toml.enc

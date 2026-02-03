@@ -1,11 +1,9 @@
-# frp
-
 [![Build Status](https://circleci.com/gh/fatedier/frp.svg?style=shield)](https://circleci.com/gh/fatedier/frp)
 [![GitHub release](https://img.shields.io/github/tag/fatedier/frp.svg?label=release)](https://github.com/fatedier/frp/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/fatedier/frp)](https://goreportcard.com/report/github.com/fatedier/frp)
 [![GitHub Releases Stats](https://img.shields.io/github/downloads/fatedier/frp/total.svg?logo=github)](https://somsubhra.github.io/github-release-stats/?username=fatedier&repository=frp)
 
-[README](README_raw.md) | [中文文档](README_zh.md)
+[README](README.md) | [中文文档](README_zh.md)
 
 ## Sponsors
 
@@ -14,20 +12,41 @@ frp is an open source project with its ongoing development made possible entirel
 <h3 align="center">Gold Sponsors</h3>
 <!--gold sponsors start-->
 <p align="center">
+  <a href="https://requestly.com/?utm_source=github&utm_medium=partnered&utm_campaign=frp" target="_blank">
+    <img width="480px" src="https://github.com/user-attachments/assets/24670320-997d-4d62-9bca-955c59fe883d">
+    <br>
+    <b>Requestly - Free & Open-Source alternative to Postman</b>
+    <br>
+    <sub>All-in-one platform to Test, Mock and Intercept APIs.</sub>
+  </a>
+</p>
+
+<p align="center">
   <a href="https://jb.gg/frp" target="_blank">
     <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_jetbrains.jpg">
+	<br>
+	<b>The complete IDE crafted for professional Go developers</b>
   </a>
 </p>
-<p align="center">
-  <a href="https://github.com/daytonaio/daytona" target="_blank">
-    <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_daytona.png">
-  </a>
-</p>
+
 <p align="center">
   <a href="https://github.com/beclab/Olares" target="_blank">
     <img width="420px" src="https://raw.githubusercontent.com/fatedier/frp/dev/doc/pic/sponsor_olares.jpeg">
+	<br>
+	<b>The sovereign cloud that puts you in control</b>
+	<br>
+	<sub>An open source, self-hosted alternative to public clouds, built for data ownership and privacy</sub>
   </a>
 </p>
+<div align="center">
+
+## Recall.ai - API for meeting recordings
+
+If you're looking for a meeting recording API, consider checking out [Recall.ai](https://www.recall.ai/?utm_source=github&utm_medium=sponsorship&utm_campaign=fatedier-frp),
+
+an API that records Zoom, Google Meet, Microsoft Teams, in-person meetings, and more.
+
+</div>
 <!--gold sponsors end-->
 
 ## What is frp?
@@ -41,67 +60,67 @@ frp also offers a P2P connect mode.
 <!-- vim-markdown-toc GFM -->
 
 * [Development Status](#development-status)
-    * [About V2](#about-v2)
+  * [About V2](#about-v2)
 * [Architecture](#architecture)
 * [Example Usage](#example-usage)
-    * [Access your computer in a LAN network via SSH](#access-your-computer-in-a-lan-network-via-ssh)
-    * [Multiple SSH services sharing the same port](#multiple-ssh-services-sharing-the-same-port)
-    * [Accessing Internal Web Services with Custom Domains in LAN](#accessing-internal-web-services-with-custom-domains-in-lan)
-    * [Forward DNS query requests](#forward-dns-query-requests)
-    * [Forward Unix Domain Socket](#forward-unix-domain-socket)
-    * [Expose a simple HTTP file server](#expose-a-simple-http-file-server)
-    * [Enable HTTPS for a local HTTP(S) service](#enable-https-for-a-local-https-service)
-    * [Expose your service privately](#expose-your-service-privately)
-    * [P2P Mode](#p2p-mode)
+  * [Access your computer in a LAN network via SSH](#access-your-computer-in-a-lan-network-via-ssh)
+  * [Multiple SSH services sharing the same port](#multiple-ssh-services-sharing-the-same-port)
+  * [Accessing Internal Web Services with Custom Domains in LAN](#accessing-internal-web-services-with-custom-domains-in-lan)
+  * [Forward DNS query requests](#forward-dns-query-requests)
+  * [Forward Unix Domain Socket](#forward-unix-domain-socket)
+  * [Expose a simple HTTP file server](#expose-a-simple-http-file-server)
+  * [Enable HTTPS for a local HTTP(S) service](#enable-https-for-a-local-https-service)
+  * [Expose your service privately](#expose-your-service-privately)
+  * [P2P Mode](#p2p-mode)
 * [Features](#features)
-    * [Configuration Files](#configuration-files)
-    * [Using Environment Variables](#using-environment-variables)
-    * [Split Configures Into Different Files](#split-configures-into-different-files)
-    * [Server Dashboard](#server-dashboard)
-    * [Client Admin UI](#client-admin-ui)
-    * [Monitor](#monitor)
-        * [Prometheus](#prometheus)
-    * [Authenticating the Client](#authenticating-the-client)
-        * [Token Authentication](#token-authentication)
-        * [OIDC Authentication](#oidc-authentication)
-    * [Encryption and Compression](#encryption-and-compression)
-        * [TLS](#tls)
-    * [Hot-Reloading frpc configuration](#hot-reloading-frpc-configuration)
-    * [Get proxy status from client](#get-proxy-status-from-client)
-    * [Only allowing certain ports on the server](#only-allowing-certain-ports-on-the-server)
-    * [Port Reuse](#port-reuse)
-    * [Bandwidth Limit](#bandwidth-limit)
-        * [For Each Proxy](#for-each-proxy)
-    * [TCP Stream Multiplexing](#tcp-stream-multiplexing)
-    * [Support KCP Protocol](#support-kcp-protocol)
-    * [Support QUIC Protocol](#support-quic-protocol)
-    * [Connection Pooling](#connection-pooling)
-    * [Load balancing](#load-balancing)
-    * [Service Health Check](#service-health-check)
-    * [Rewriting the HTTP Host Header](#rewriting-the-http-host-header)
-    * [Setting other HTTP Headers](#setting-other-http-headers)
-    * [Get Real IP](#get-real-ip)
-        * [HTTP X-Forwarded-For](#http-x-forwarded-for)
-        * [Proxy Protocol](#proxy-protocol)
-    * [Require HTTP Basic Auth (Password) for Web Services](#require-http-basic-auth-password-for-web-services)
-    * [Custom Subdomain Names](#custom-subdomain-names)
-    * [URL Routing](#url-routing)
-    * [TCP Port Multiplexing](#tcp-port-multiplexing)
-    * [Connecting to frps via PROXY](#connecting-to-frps-via-proxy)
-    * [Port range mapping](#port-range-mapping)
-    * [Client Plugins](#client-plugins)
-    * [Server Manage Plugins](#server-manage-plugins)
-    * [SSH Tunnel Gateway](#ssh-tunnel-gateway)
-    * [Virtual Network (VirtualNet)](#virtual-network-virtualnet)
+  * [Configuration Files](#configuration-files)
+  * [Using Environment Variables](#using-environment-variables)
+  * [Split Configures Into Different Files](#split-configures-into-different-files)
+  * [Server Dashboard](#server-dashboard)
+  * [Client Admin UI](#client-admin-ui)
+  * [Monitor](#monitor)
+    * [Prometheus](#prometheus)
+  * [Authenticating the Client](#authenticating-the-client)
+    * [Token Authentication](#token-authentication)
+    * [OIDC Authentication](#oidc-authentication)
+  * [Encryption and Compression](#encryption-and-compression)
+    * [TLS](#tls)
+  * [Hot-Reloading frpc configuration](#hot-reloading-frpc-configuration)
+  * [Get proxy status from client](#get-proxy-status-from-client)
+  * [Only allowing certain ports on the server](#only-allowing-certain-ports-on-the-server)
+  * [Port Reuse](#port-reuse)
+  * [Bandwidth Limit](#bandwidth-limit)
+    * [For Each Proxy](#for-each-proxy)
+  * [TCP Stream Multiplexing](#tcp-stream-multiplexing)
+  * [Support KCP Protocol](#support-kcp-protocol)
+  * [Support QUIC Protocol](#support-quic-protocol)
+  * [Connection Pooling](#connection-pooling)
+  * [Load balancing](#load-balancing)
+  * [Service Health Check](#service-health-check)
+  * [Rewriting the HTTP Host Header](#rewriting-the-http-host-header)
+  * [Setting other HTTP Headers](#setting-other-http-headers)
+  * [Get Real IP](#get-real-ip)
+    * [HTTP X-Forwarded-For](#http-x-forwarded-for)
+    * [Proxy Protocol](#proxy-protocol)
+  * [Require HTTP Basic Auth (Password) for Web Services](#require-http-basic-auth-password-for-web-services)
+  * [Custom Subdomain Names](#custom-subdomain-names)
+  * [URL Routing](#url-routing)
+  * [TCP Port Multiplexing](#tcp-port-multiplexing)
+  * [Connecting to frps via PROXY](#connecting-to-frps-via-proxy)
+  * [Port range mapping](#port-range-mapping)
+  * [Client Plugins](#client-plugins)
+  * [Server Manage Plugins](#server-manage-plugins)
+  * [SSH Tunnel Gateway](#ssh-tunnel-gateway)
+  * [Virtual Network (VirtualNet)](#virtual-network-virtualnet)
 * [Feature Gates](#feature-gates)
-    * [Available Feature Gates](#available-feature-gates)
-    * [Enabling Feature Gates](#enabling-feature-gates)
-    * [Feature Lifecycle](#feature-lifecycle)
+  * [Available Feature Gates](#available-feature-gates)
+  * [Enabling Feature Gates](#enabling-feature-gates)
+  * [Feature Lifecycle](#feature-lifecycle)
 * [Related Projects](#related-projects)
 * [Contributing](#contributing)
 * [Donation](#donation)
-    * [GitHub Sponsors](#github-sponsors)
-    * [PayPal](#paypal)
+  * [GitHub Sponsors](#github-sponsors)
+  * [PayPal](#paypal)
 
 <!-- vim-markdown-toc -->
 
@@ -150,7 +169,7 @@ Some antiviruses improperly mark frpc as malware and delete it. This is due to f
 
 2. Start `frps` on server A:
 
-  `./frps -c ./frps.toml`
+`./frps -c ./frps.toml`
 
 3. Modify `frpc.toml` on server B and set the `serverAddr` field to the public IP address of your frps server:
 
@@ -171,11 +190,11 @@ Note that the `localPort` (listened on the client) and `remotePort` (exposed on 
 
 4. Start `frpc` on server B:
 
-  `./frpc -c ./frpc.toml`
+`./frpc -c ./frpc.toml`
 
 5. To access server B from another machine through server A via SSH (assuming the username is `test`), use the following command:
 
-  `ssh -oPort=6000 test@x.x.x.x`
+`ssh -oPort=6000 test@x.x.x.x`
 
 ### Multiple SSH services sharing the same port
 
@@ -220,11 +239,11 @@ This example implements multiple SSH services exposed through the same port usin
 
 4. To access internal machine A using SSH ProxyCommand, assuming the username is "test":
 
-  `ssh -o 'proxycommand socat - PROXY:x.x.x.x:%h:%p,proxyport=5002' test@machine-a.example.com`
+`ssh -o 'proxycommand socat - PROXY:x.x.x.x:%h:%p,proxyport=5002' test@machine-a.example.com`
 
 5. To access internal machine B, the only difference is the domain name, assuming the username is "test":
 
-  `ssh -o 'proxycommand socat - PROXY:x.x.x.x:%h:%p,proxyport=5002' test@machine-b.example.com`
+`ssh -o 'proxycommand socat - PROXY:x.x.x.x:%h:%p,proxyport=5002' test@machine-b.example.com`
 
 ### Accessing Internal Web Services with Custom Domains in LAN
 
@@ -240,11 +259,11 @@ Unfortunately, we cannot resolve a domain name to a local IP. However, we can us
   vhostHTTPPort = 8080
   ```
 
-  If you want to configure an https proxy, you need to set up the `vhostHTTPSPort`.
+If you want to configure an https proxy, you need to set up the `vhostHTTPSPort`.
 
 2. Start `frps`:
 
-  `./frps -c ./frps.toml`
+`./frps -c ./frps.toml`
 
 3. Modify `frpc.toml` and set `serverAddr` to the IP address of the remote frps server. Specify the `localPort` of your web service:
 
@@ -262,7 +281,7 @@ Unfortunately, we cannot resolve a domain name to a local IP. However, we can us
 
 4. Start `frpc`:
 
-  `./frpc -c ./frpc.toml`
+`./frpc -c ./frpc.toml`
 
 5. Map the A record of `www.example.com` to either the public IP of the remote frps server or a CNAME record pointing to your original domain.
 
@@ -279,7 +298,7 @@ Unfortunately, we cannot resolve a domain name to a local IP. However, we can us
 
 2. Start `frps`:
 
-  `./frps -c ./frps.toml`
+`./frps -c ./frps.toml`
 
 3. Modify `frpc.toml` and set `serverAddr` to the IP address of the remote frps server. Forward DNS query requests to the Google Public DNS server `8.8.8.8:53`:
 
@@ -298,11 +317,11 @@ Unfortunately, we cannot resolve a domain name to a local IP. However, we can us
 
 4. Start frpc:
 
-  `./frpc -c ./frpc.toml`
+`./frpc -c ./frpc.toml`
 
 5. Test DNS resolution using the `dig` command:
 
-  `dig @x.x.x.x -p 6000 www.google.com`
+`dig @x.x.x.x -p 6000 www.google.com`
 
 ### Forward Unix Domain Socket
 
@@ -328,7 +347,7 @@ Configure `frps` as above.
 
 2. Test the configuration by getting the docker version using `curl`:
 
-  `curl http://x.x.x.x:6000/version`
+`curl http://x.x.x.x:6000/version`
 
 ### Expose a simple HTTP file server
 
@@ -423,7 +442,7 @@ Configure `frps` same as above.
 
 3. On machine C, connect to SSH on machine B, using this command:
 
-  `ssh -oPort=6000 127.0.0.1`
+`ssh -oPort=6000 127.0.0.1`
 
 ### P2P Mode
 
@@ -470,7 +489,7 @@ Note that it may not work with all types of NAT devices. You might want to fallb
 
 3. On machine C, connect to SSH on machine B, using this command:
 
-  `ssh -oPort=6000 127.0.0.1`
+`ssh -oPort=6000 127.0.0.1`
 
 ## Features
 
@@ -502,7 +521,7 @@ name = "ssh"
 type = "tcp"
 localIP = "127.0.0.1"
 localPort = 22
-remotePort = "{{ .Envs.FRP_SSH_REMOTE_PORT }}"
+remotePort = {{ .Envs.FRP_SSH_REMOTE_PORT }}
 ```
 
 With the config above, variables can be passed into `frpc` program like this:
@@ -598,7 +617,7 @@ Enable dashboard first, then configure `enablePrometheus = true` in `frps.toml`.
 
 ### Authenticating the Client
 
-There are 2 authentication methods to authenticate frpc with frps. 
+There are 2 authentication methods to authenticate frpc with frps.
 
 You can decide which one to use by configuring `auth.method` in `frpc.toml` and `frps.toml`, the default one is token.
 
@@ -611,6 +630,21 @@ Configuring `auth.additionalScopes = ["NewWorkConns"]` will do the same for ever
 When specifying `auth.method = "token"` in `frpc.toml` and `frps.toml` - token based authentication will be used.
 
 Make sure to specify the same `auth.token` in `frps.toml` and `frpc.toml` for frpc to pass frps validation
+
+##### Token Source
+
+frp supports reading authentication tokens from external sources using the `tokenSource` configuration. Currently, file-based token source is supported.
+
+**File-based token source:**
+
+```toml
+# frpc.toml
+auth.method = "token"
+auth.tokenSource.type = "file"
+auth.tokenSource.file.path = "/path/to/token/file"
+```
+
+The token will be read from the specified file at startup. This is useful for scenarios where tokens are managed by external systems or need to be kept separate from configuration files for security reasons.
 
 #### OIDC Authentication
 
@@ -837,7 +871,7 @@ KCP mode uses UDP as the underlying transport. Using KCP in frp:
   kcpBindPort = 7000
   ```
 
-  The `kcpBindPort` number can be the same number as `bindPort`, since `bindPort` field specifies a TCP port.
+The `kcpBindPort` number can be the same number as `bindPort`, since `bindPort` field specifies a TCP port.
 
 2. Configure `frpc.toml` to use KCP to connect to frps:
 
@@ -864,7 +898,7 @@ Using QUIC in frp:
   quicBindPort = 7000
   ```
 
-  The `quicBindPort` number can be the same number as `bindPort`, since `bindPort` field specifies a TCP port.
+The `quicBindPort` number can be the same number as `bindPort`, since `bindPort` field specifies a TCP port.
 
 2. Configure `frpc.toml` to use QUIC to connect to frps:
 
@@ -1025,7 +1059,7 @@ You can get user's real IP from HTTP request headers `X-Forwarded-For`.
 
 #### Proxy Protocol
 
-frp supports Proxy Protocol to send user's real IP to local services. It support all types except UDP.
+frp supports Proxy Protocol to send user's real IP to local services.
 
 Here is an example for https service:
 

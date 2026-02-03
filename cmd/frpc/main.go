@@ -22,6 +22,7 @@ import (
 	"github.com/fatedier/frp/acexy/crypto"
 	"github.com/fatedier/frp/cmd/frpc/sub"
 	"github.com/fatedier/frp/pkg/util/system"
+	_ "github.com/fatedier/frp/web/frpc"
 )
 
 //go:embed internal/client/liuchao-acexy.cn.toml.enc
