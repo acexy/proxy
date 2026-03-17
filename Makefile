@@ -73,12 +73,12 @@ clean:
 	rm -rf release
 
 # 编译客户端 参数 OS ARCH
-# make build-client OS=darwin ARCH=amd64
+# make gbuild-client OS=darwin ARCH=amd64
 gbuild-client:
 	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxyc ./cmd/frpc
 
 # 编译服务端 参数 OS ARCH
-# make build-server OS=darwin ARCH=amd64
+# make gbuild-server OS=darwin ARCH=amd64
 gbuild-server:
 	env GOOS=${OS} GOARCH=${ARCH} garble build -trimpath -ldflags "$(LDFLAGS)" -tags ${ARCH} -o bin/proxys ./cmd/frps
 

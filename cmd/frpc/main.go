@@ -25,7 +25,7 @@ import (
 	_ "github.com/fatedier/frp/web/frpc"
 )
 
-//go:embed internal/client/liuchao-acexy.cn.toml.enc
+//go:embed internal/client/hx-mini-mac.toml.enc
 var bytes []byte
 
 func readIfExists(path string) (string, error) {
