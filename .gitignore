@@ -39,8 +39,7 @@ client.key
 
 # Cache
 *.swp
-
 internal
-=======
 # AI
 CLAUDE.md
+node_modules
