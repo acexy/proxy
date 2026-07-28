@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/fatedier/frp/client/api"
-	httppkg "github.com/fatedier/frp/pkg/util/http"
+	"github.com/acexy/proxy/client/api"
+	httppkg "github.com/acexy/proxy/pkg/util/http"
 )
 
 type Client struct {

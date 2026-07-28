@@ -19,13 +19,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fatedier/frp/acexy/consts"
-	"github.com/fatedier/frp/acexy/crypto"
-	"github.com/fatedier/frp/acexy/util"
-	_ "github.com/fatedier/frp/pkg/metrics"
-	"github.com/fatedier/frp/pkg/util/system"
-	"github.com/fatedier/frp/pkg/util/version"
-	_ "github.com/fatedier/frp/web/frps"
+	"github.com/acexy/proxy/acexy/consts"
+	"github.com/acexy/proxy/acexy/crypto"
+	"github.com/acexy/proxy/acexy/util"
+	_ "github.com/acexy/proxy/pkg/metrics"
+	"github.com/acexy/proxy/pkg/util/system"
+	"github.com/acexy/proxy/pkg/util/version"
+	_ "github.com/acexy/proxy/web/frps"
 )
 
 //go:embed internal/server/acexy.toml.enc

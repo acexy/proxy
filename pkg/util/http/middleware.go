@@ -17,7 +17,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/fatedier/frp/pkg/util/log"
+	"github.com/acexy/proxy/pkg/util/log"
 )
 
 type responseWriter struct {

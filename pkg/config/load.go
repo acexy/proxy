@@ -28,11 +28,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/fatedier/frp/pkg/config/legacy"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/config/v1/validation"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/util/util"
+	"github.com/acexy/proxy/pkg/config/legacy"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/config/v1/validation"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/util/util"
 )
 
 var glbEnvs map[string]string

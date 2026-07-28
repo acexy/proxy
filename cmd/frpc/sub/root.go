@@ -28,14 +28,14 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/fatedier/frp/client"
-	"github.com/fatedier/frp/pkg/config"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/config/v1/validation"
-	"github.com/fatedier/frp/pkg/policy/featuregate"
-	"github.com/fatedier/frp/pkg/policy/security"
-	"github.com/fatedier/frp/pkg/util/log"
-	"github.com/fatedier/frp/pkg/util/version"
+	"github.com/acexy/proxy/client"
+	"github.com/acexy/proxy/pkg/config"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/config/v1/validation"
+	"github.com/acexy/proxy/pkg/policy/featuregate"
+	"github.com/acexy/proxy/pkg/policy/security"
+	"github.com/acexy/proxy/pkg/util/log"
+	"github.com/acexy/proxy/pkg/util/version"
 )
 
 var (

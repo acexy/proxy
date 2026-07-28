@@ -20,7 +20,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/fatedier/frp/pkg/util/log"
+	"github.com/acexy/proxy/pkg/util/log"
 )
 
 var NotFoundPagePath = ""

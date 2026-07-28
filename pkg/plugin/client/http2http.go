@@ -24,9 +24,9 @@ import (
 
 	"github.com/fatedier/golib/pool"
 
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/util/log"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/util/log"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
 )
 
 func init() {

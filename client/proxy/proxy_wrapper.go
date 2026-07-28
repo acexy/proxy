@@ -25,13 +25,13 @@ import (
 
 	"github.com/fatedier/golib/errors"
 
-	"github.com/fatedier/frp/client/event"
-	"github.com/fatedier/frp/client/health"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/transport"
-	"github.com/fatedier/frp/pkg/util/xlog"
-	"github.com/fatedier/frp/pkg/vnet"
+	"github.com/acexy/proxy/client/event"
+	"github.com/acexy/proxy/client/health"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/transport"
+	"github.com/acexy/proxy/pkg/util/xlog"
+	"github.com/acexy/proxy/pkg/vnet"
 )
 
 const (

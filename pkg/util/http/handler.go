@@ -18,7 +18,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/fatedier/frp/pkg/util/log"
+	"github.com/acexy/proxy/pkg/util/log"
 )
 
 type GeneralResponse struct {

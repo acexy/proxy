@@ -15,7 +15,7 @@
 package server
 
 import (
-	"github.com/fatedier/frp/pkg/msg"
+	"github.com/acexy/proxy/pkg/msg"
 )
 
 type Request struct {

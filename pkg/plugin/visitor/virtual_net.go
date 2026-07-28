@@ -24,9 +24,9 @@ import (
 	"sync"
 	"time"
 
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	netutil "github.com/fatedier/frp/pkg/util/net"
-	"github.com/fatedier/frp/pkg/util/xlog"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	netutil "github.com/acexy/proxy/pkg/util/net"
+	"github.com/acexy/proxy/pkg/util/xlog"
 )
 
 func init() {

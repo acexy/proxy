@@ -17,10 +17,10 @@ package client
 import (
 	"net/http"
 
-	"github.com/fatedier/frp/client/api"
-	"github.com/fatedier/frp/client/proxy"
-	httppkg "github.com/fatedier/frp/pkg/util/http"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
+	"github.com/acexy/proxy/client/api"
+	"github.com/acexy/proxy/client/proxy"
+	httppkg "github.com/acexy/proxy/pkg/util/http"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
 )
 
 func (svr *Service) registerRouteHandlers(helper *httppkg.RouterRegisterHelper) {

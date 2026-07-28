@@ -10,7 +10,7 @@ import (
 	"github.com/acexy/golang-toolkit/sys"
 	"github.com/acexy/golang-toolkit/util/coll"
 	"github.com/acexy/golang-toolkit/util/net"
-	"github.com/fatedier/frp/acexy/consts"
+	"github.com/acexy/proxy/acexy/consts"
 )
 
 var watchOnce sync.Once
@@ -29,13 +29,15 @@ func loadConfig() {
 		if err == nil {
 			deny := string(data)
 			ips := strings.Split(strings.ReplaceAll(deny, "\r\n", "\n"), "\n")
-			fileIpRules := coll.SliceDistinct(coll.SliceFilter(ips, func(v string) bool {
-				v = strings.TrimSpace(v)
-				if v != "" {
-					return true
+			fileIpRules := make([]string, 0, len(ips))
+			for _, ip := range ips {
+				// 保存清理后的规则，避免首尾空白导致匹配失效。
+				ip = strings.TrimSpace(ip)
+				if ip != "" {
+					fileIpRules = append(fileIpRules, ip)
 				}
-				return false
-			}))
+			}
+			fileIpRules = coll.SliceDistinct(fileIpRules)
 			added, removed := coll.SliceDiff(currentIpRules, fileIpRules)
 			if len(added) > 0 {
 				ipChecker.AddRuleIp(added...)

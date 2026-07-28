@@ -27,18 +27,21 @@ import (
 	libio "github.com/fatedier/golib/io"
 	"golang.org/x/time/rate"
 
-	"github.com/fatedier/frp/pkg/config/types"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	plugin "github.com/fatedier/frp/pkg/plugin/server"
-	"github.com/fatedier/frp/pkg/util/limit"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
-	"github.com/fatedier/frp/pkg/util/xlog"
-	"github.com/fatedier/frp/server/controller"
-	"github.com/fatedier/frp/server/metrics"
+	"github.com/acexy/proxy/pkg/config/types"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	plugin "github.com/acexy/proxy/pkg/plugin/server"
+	"github.com/acexy/proxy/pkg/util/limit"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
+	"github.com/acexy/proxy/pkg/util/xlog"
+	"github.com/acexy/proxy/server/controller"
+	"github.com/acexy/proxy/server/metrics"
 )
 
 var proxyFactoryRegistry = map[reflect.Type]func(*BaseProxy) Proxy{}
+
+// denyIPLogLimiter 限制拒绝日志的写入速率，避免恶意扫描造成日志洪泛。
+var denyIPLogLimiter = rate.NewLimiter(rate.Every(time.Second), 5)
 
 func RegisterProxyFactory(proxyConfType reflect.Type, factory func(*BaseProxy) Proxy) {
 	proxyFactoryRegistry[proxyConfType] = factory
@@ -205,7 +208,9 @@ func (pxy *BaseProxy) startCommonTCPListenersHandler() {
 				// 增加ip检查
 				remoteIP, _, _ := net.SplitHostPort(ipInfo)
 				if IsDenyIP(remoteIP) {
-					xl.Warnf("user connection from %s rejected by denyIPs", ipInfo)
+					if denyIPLogLimiter.Allow() {
+						xl.Warnf("user connection from %s rejected by denyIPs", ipInfo)
+					}
 					_ = c.Close()
 					continue
 				}

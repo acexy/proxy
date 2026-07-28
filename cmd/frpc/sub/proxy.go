@@ -21,10 +21,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/fatedier/frp/pkg/config"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/config/v1/validation"
-	"github.com/fatedier/frp/pkg/policy/security"
+	"github.com/acexy/proxy/pkg/config"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/config/v1/validation"
+	"github.com/acexy/proxy/pkg/policy/security"
 )
 
 var proxyTypes = []v1.ProxyType{

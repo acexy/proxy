@@ -23,14 +23,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatedier/frp/pkg/config/types"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/metrics/mem"
-	httppkg "github.com/fatedier/frp/pkg/util/http"
-	"github.com/fatedier/frp/pkg/util/log"
-	"github.com/fatedier/frp/pkg/util/version"
-	"github.com/fatedier/frp/server/proxy"
-	"github.com/fatedier/frp/server/registry"
+	"github.com/acexy/proxy/pkg/config/types"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/metrics/mem"
+	httppkg "github.com/acexy/proxy/pkg/util/http"
+	"github.com/acexy/proxy/pkg/util/log"
+	"github.com/acexy/proxy/pkg/util/version"
+	"github.com/acexy/proxy/server/proxy"
+	"github.com/acexy/proxy/server/registry"
 )
 
 type Controller struct {

@@ -23,12 +23,12 @@ import (
 
 	"github.com/samber/lo"
 
-	"github.com/fatedier/frp/client/event"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/transport"
-	"github.com/fatedier/frp/pkg/util/xlog"
-	"github.com/fatedier/frp/pkg/vnet"
+	"github.com/acexy/proxy/client/event"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/transport"
+	"github.com/acexy/proxy/pkg/util/xlog"
+	"github.com/acexy/proxy/pkg/vnet"
 )
 
 type Manager struct {

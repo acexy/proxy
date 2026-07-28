@@ -19,9 +19,9 @@ import (
 	"slices"
 	"time"
 
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/util/util"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/util/util"
 )
 
 type TokenAuthSetterVerifier struct {

@@ -18,11 +18,11 @@ import (
 	_ "embed"
 	"os"
 
-	"github.com/fatedier/frp/acexy/consts"
-	"github.com/fatedier/frp/acexy/crypto"
-	"github.com/fatedier/frp/cmd/frpc/sub"
-	"github.com/fatedier/frp/pkg/util/system"
-	_ "github.com/fatedier/frp/web/frpc"
+	"github.com/acexy/proxy/acexy/consts"
+	"github.com/acexy/proxy/acexy/crypto"
+	"github.com/acexy/proxy/cmd/frpc/sub"
+	"github.com/acexy/proxy/pkg/util/system"
+	_ "github.com/acexy/proxy/web/frpc"
 )
 
 //go:embed internal/client/hx-mini-mac.toml.enc

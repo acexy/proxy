@@ -24,13 +24,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/fatedier/frp/client/proxy"
-	"github.com/fatedier/frp/pkg/config"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/config/v1/validation"
-	"github.com/fatedier/frp/pkg/policy/security"
-	httppkg "github.com/fatedier/frp/pkg/util/http"
-	"github.com/fatedier/frp/pkg/util/log"
+	"github.com/acexy/proxy/client/proxy"
+	"github.com/acexy/proxy/pkg/config"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/config/v1/validation"
+	"github.com/acexy/proxy/pkg/policy/security"
+	httppkg "github.com/acexy/proxy/pkg/util/http"
+	"github.com/acexy/proxy/pkg/util/log"
 )
 
 // Controller handles HTTP API requests for frpc.

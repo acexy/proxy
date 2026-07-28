@@ -27,15 +27,15 @@ import (
 	libnet "github.com/fatedier/golib/net"
 	"golang.org/x/time/rate"
 
-	"github.com/fatedier/frp/pkg/config/types"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	plugin "github.com/fatedier/frp/pkg/plugin/client"
-	"github.com/fatedier/frp/pkg/transport"
-	"github.com/fatedier/frp/pkg/util/limit"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
-	"github.com/fatedier/frp/pkg/util/xlog"
-	"github.com/fatedier/frp/pkg/vnet"
+	"github.com/acexy/proxy/pkg/config/types"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	plugin "github.com/acexy/proxy/pkg/plugin/client"
+	"github.com/acexy/proxy/pkg/transport"
+	"github.com/acexy/proxy/pkg/util/limit"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
+	"github.com/acexy/proxy/pkg/util/xlog"
+	"github.com/acexy/proxy/pkg/vnet"
 )
 
 var proxyFactoryRegistry = map[reflect.Type]func(*BaseProxy, v1.ProxyConfigurer) Proxy{}

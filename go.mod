@@ -1,4 +1,4 @@
-module github.com/fatedier/frp
+module github.com/acexy/proxy
 
 go 1.24.6
 

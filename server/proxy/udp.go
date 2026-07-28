@@ -26,12 +26,12 @@ import (
 	"github.com/fatedier/golib/errors"
 	libio "github.com/fatedier/golib/io"
 
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/proto/udp"
-	"github.com/fatedier/frp/pkg/util/limit"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
-	"github.com/fatedier/frp/server/metrics"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/proto/udp"
+	"github.com/acexy/proxy/pkg/util/limit"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
+	"github.com/acexy/proxy/server/metrics"
 )
 
 func init() {

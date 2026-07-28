@@ -21,9 +21,9 @@ import (
 
 	"github.com/fatedier/golib/errors"
 
-	"github.com/fatedier/frp/pkg/util/log"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
-	"github.com/fatedier/frp/pkg/util/xlog"
+	"github.com/acexy/proxy/pkg/util/log"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
+	"github.com/acexy/proxy/pkg/util/xlog"
 )
 
 type RouteInfo string

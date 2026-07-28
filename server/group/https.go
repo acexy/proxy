@@ -21,7 +21,7 @@ import (
 
 	gerr "github.com/fatedier/golib/errors"
 
-	"github.com/fatedier/frp/pkg/util/vhost"
+	"github.com/acexy/proxy/pkg/util/vhost"
 )
 
 type HTTPSGroupController struct {

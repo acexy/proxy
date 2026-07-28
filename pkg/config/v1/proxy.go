@@ -24,9 +24,9 @@ import (
 
 	"github.com/samber/lo"
 
-	"github.com/fatedier/frp/pkg/config/types"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/util/util"
+	"github.com/acexy/proxy/pkg/config/types"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/util/util"
 )
 
 func readIfExists(path string) (string, error) {

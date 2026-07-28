@@ -7,13 +7,13 @@ import (
 
 	"github.com/onsi/ginkgo/v2"
 
-	"github.com/fatedier/frp/pkg/transport"
-	"github.com/fatedier/frp/test/e2e/framework"
-	"github.com/fatedier/frp/test/e2e/framework/consts"
-	"github.com/fatedier/frp/test/e2e/mock/server/httpserver"
-	"github.com/fatedier/frp/test/e2e/mock/server/streamserver"
-	"github.com/fatedier/frp/test/e2e/pkg/request"
-	"github.com/fatedier/frp/test/e2e/pkg/ssh"
+	"github.com/acexy/proxy/pkg/transport"
+	"github.com/acexy/proxy/test/e2e/framework"
+	"github.com/acexy/proxy/test/e2e/framework/consts"
+	"github.com/acexy/proxy/test/e2e/mock/server/httpserver"
+	"github.com/acexy/proxy/test/e2e/mock/server/streamserver"
+	"github.com/acexy/proxy/test/e2e/pkg/request"
+	"github.com/acexy/proxy/test/e2e/pkg/ssh"
 )
 
 var _ = ginkgo.Describe("[Feature: SSH Tunnel]", func() {

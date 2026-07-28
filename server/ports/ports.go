@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/fatedier/frp/pkg/config/types"
+	"github.com/acexy/proxy/pkg/config/types"
 )
 
 const (

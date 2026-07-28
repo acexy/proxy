@@ -15,7 +15,7 @@
 package api
 
 import (
-	v1 "github.com/fatedier/frp/pkg/config/v1"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
 )
 
 type ServerInfoResp struct {

@@ -30,15 +30,15 @@ import (
 	flag "github.com/spf13/pflag"
 	"golang.org/x/crypto/ssh"
 
-	"github.com/fatedier/frp/client/proxy"
-	"github.com/fatedier/frp/pkg/config"
-	v1 "github.com/fatedier/frp/pkg/config/v1"
-	"github.com/fatedier/frp/pkg/msg"
-	"github.com/fatedier/frp/pkg/util/log"
-	netpkg "github.com/fatedier/frp/pkg/util/net"
-	"github.com/fatedier/frp/pkg/util/util"
-	"github.com/fatedier/frp/pkg/util/xlog"
-	"github.com/fatedier/frp/pkg/virtual"
+	"github.com/acexy/proxy/client/proxy"
+	"github.com/acexy/proxy/pkg/config"
+	v1 "github.com/acexy/proxy/pkg/config/v1"
+	"github.com/acexy/proxy/pkg/msg"
+	"github.com/acexy/proxy/pkg/util/log"
+	netpkg "github.com/acexy/proxy/pkg/util/net"
+	"github.com/acexy/proxy/pkg/util/util"
+	"github.com/acexy/proxy/pkg/util/xlog"
+	"github.com/acexy/proxy/pkg/virtual"
 )
 
 const (
